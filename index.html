@@ -7,18 +7,17 @@
   <title>ATD Dimension Calculator</title>
 
   <!-- PWA -->
-  <link rel="manifest" href="./manifest.json">
+  <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1e293b">
-  <link rel="icon" href="./app-icon.png">
-  <link rel="apple-touch-icon" href="./app-icon.png">
+  <link rel="icon" href="app-icon.png">
+  <link rel="apple-touch-icon" href="app-icon.png">
 
   <!-- External CSS -->
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="style.css">
 
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Inline CSS -->
   <style>
     body {
       background: linear-gradient(180deg, #0f172a, #e5e7eb);
@@ -53,11 +52,12 @@
       3-Pulley Modified ATD
     </div>
 
+    <!-- INPUTS -->
     <div>
       <label class="font-semibold text-slate-700">
         Half Tension Length (m)
       </label>
-      <input id="length" type="number" value="750"
+      <input id="length" type="number" placeholder="eg 750"
         class="w-full mt-1 p-4 rounded-xl bg-white shadow-inner focus:outline-none text-lg">
     </div>
 
@@ -65,16 +65,25 @@
       <label class="font-semibold text-slate-700">
         Temperature (°C)
       </label>
-      <input id="temperature" type="number" value="35"
+      <input id="temperature" type="number" placeholder="eg 35"
         class="w-full mt-1 p-4 rounded-xl bg-white shadow-inner focus:outline-none text-lg">
     </div>
 
-    <button onclick="calculate()"
-      class="w-full py-4 rounded-2xl text-white font-bold text-lg
-             bg-gradient-to-r from-blue-700 to-blue-500
-             shadow-xl active:scale-95 transition">
-      Calculate Dimensions
-    </button>
+    <!-- BUTTONS -->
+    <div class="grid grid-cols-2 gap-3">
+      <button onclick="calculate()"
+        class="py-4 rounded-2xl text-white font-bold text-lg
+               bg-gradient-to-r from-blue-700 to-blue-500
+               shadow-xl active:scale-95 transition">
+        Calculate
+      </button>
+
+      <button onclick="resetForm()"
+        class="py-4 rounded-2xl text-slate-800 font-bold text-lg
+               bg-slate-200 shadow-inner active:scale-95 transition">
+        Reset
+      </button>
+    </div>
 
     <!-- Results -->
     <div id="results" class="hidden bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl p-5 shadow-inner space-y-2">
@@ -122,7 +131,7 @@
   </p>
 </footer>
 
-<!-- App Logic -->
+<!-- Scripts -->
 <script>
 function round(val, d) {
   return Math.round((val + Number.EPSILON) * 10 ** d) / 10 ** d;
@@ -154,17 +163,18 @@ function calculate() {
 
   document.getElementById("results").classList.remove("hidden");
 }
+
+function resetForm() {
+  document.getElementById("length").value = "";
+  document.getElementById("temperature").value = "";
+  document.getElementById("results").classList.add("hidden");
+}
 </script>
 
-<!-- ✅ SERVICE WORKER (CORRECT & REQUIRED) -->
+<!-- Service Worker -->
 <script>
 if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker
-      .register("./service-worker.js")
-      .then(reg => console.log("Service Worker registered:", reg.scope))
-      .catch(err => console.error("Service Worker failed:", err));
-  });
+  navigator.serviceWorker.register("./service-worker.js");
 }
 </script>
 
