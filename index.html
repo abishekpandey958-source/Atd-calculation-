@@ -7,18 +7,18 @@
   <title>ATD Dimension Calculator</title>
 
   <!-- PWA -->
-  <link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#1e293b">
-  <link rel="icon" href="app-icon.png">
-  <link rel="apple-touch-icon" href="app-icon.png">
+  <link rel="icon" href="./app-icon.png">
+  <link rel="apple-touch-icon" href="./app-icon.png">
 
   <!-- External CSS -->
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./style.css">
 
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Inline CSS ONLY -->
+  <!-- Inline CSS -->
   <style>
     body {
       background: linear-gradient(180deg, #0f172a, #e5e7eb);
@@ -122,7 +122,7 @@
   </p>
 </footer>
 
-<!-- Scripts -->
+<!-- App Logic -->
 <script>
 function round(val, d) {
   return Math.round((val + Number.EPSILON) * 10 ** d) / 10 ** d;
@@ -153,16 +153,18 @@ function calculate() {
   document.getElementById("resY_m").textContent = round(Y / 1000, 3);
 
   document.getElementById("results").classList.remove("hidden");
-  document.getElementById("results").scrollIntoView({ behavior: "smooth" });
 }
 </script>
 
-<!-- ✅ SERVICE WORKER (Correct Place) -->
+<!-- ✅ SERVICE WORKER (CORRECT & REQUIRED) -->
 <script>
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("./service-worker.js")
-    .then(() => console.log("Service Worker Registered"))
-    .catch(err => console.error("SW registration failed", err));
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("./service-worker.js")
+      .then(reg => console.log("Service Worker registered:", reg.scope))
+      .catch(err => console.error("Service Worker failed:", err));
+  });
 }
 </script>
 
