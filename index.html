@@ -58,7 +58,7 @@
         Half Tension Length (m)
       </label>
       <input id="length" type="number" placeholder="eg 750"
-        class="w-full mt-1 p-4 rounded-xl bg-white shadow-inner focus:outline-none text-lg">
+       class="glass-input w-full mt-1 p-4 focus:outline-none text-lg" 
     </div>
 
     <div>
@@ -66,15 +66,13 @@
         Temperature (°C)
       </label>
       <input id="temperature" type="number" placeholder="eg 35"
-        class="w-full mt-1 p-4 rounded-xl bg-white shadow-inner focus:outline-none text-lg">
+        class="glass-input w-full mt-1 p-4 focus:outline-none text-lg"
     </div>
 
     <!-- BUTTONS -->
     <div class="grid grid-cols-2 gap-3">
       <button onclick="calculate()"
-        class="py-4 rounded-2xl text-white font-bold text-lg
-               bg-gradient-to-r from-blue-700 to-blue-500
-               shadow-xl active:scale-95 transition">
+        class="btn-3d w-full py-4 text-white font-bold text-lg transition"
         Calculate
       </button>
 
@@ -86,7 +84,7 @@
     </div>
 
     <!-- Results -->
-    <div id="results" class="hidden bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl p-5 shadow-inner space-y-2">
+    <div id="results" class="hidden result-glass p-5 space-y-2">
 
       <p class="font-semibold">
         ΔT: <span id="deltaT">0</span> °C
