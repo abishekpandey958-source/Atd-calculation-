@@ -1,3 +1,9 @@
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.18);
+  --glass-border: rgba(255, 255, 255, 0.25);
+  --glass-shadow: 0 25px 50px rgba(0, 0, 0, 0.35);
+  --neon-blue: #3b82f6;
+}
 body {
   margin: 0;
   font-family: "Segoe UI", system-ui, sans-serif;
