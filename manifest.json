@@ -1,0 +1,23 @@
+{
+  "name": "ATD Dimension Calculator",
+  "short_name": "ATD Calc",
+  "description": "ATD Dimension Calculator for 3-Pulley Modified ATD (Indian Railway TRD)",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#1e293b",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "app-icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "app-icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
