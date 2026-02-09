@@ -1,9 +1,7 @@
 {
   "name": "ATD Dimension Calculator",
   "short_name": "ATD Calc",
-  "description": "ATD Dimension Calculator – Indian Railway TRD",
   "start_url": "./index.html",
-  "scope": "./",
   "display": "standalone",
   "background_color": "#0f172a",
   "theme_color": "#1e293b",
@@ -15,9 +13,10 @@
       "type": "image/png"
     },
     {
-      "src": "app-icon.png",
+      "src": "splash-icon.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
