@@ -31,3 +31,17 @@ input {
   transform: translateY(-6px);
   box-shadow: 0 35px 65px rgba(0, 0, 0, 0.45);
 }
+.glass-input {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 18px;
+  box-shadow:
+    inset 4px 4px 10px rgba(0, 0, 0, 0.08),
+    inset -4px -4px 10px rgba(255, 255, 255, 0.9);
+  transition: box-shadow 0.2s ease;
+}
+
+.glass-input:focus {
+  box-shadow:
+    0 0 0 2px var(--neon-blue),
+    inset 4px 4px 12px rgba(0, 0, 0, 0.12);
+}
