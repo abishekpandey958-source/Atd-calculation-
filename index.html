@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>ATD Dimension Calculator</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1e293b">
+  <link rel="icon" href="app-icon.png">
+  <link rel="apple-touch-icon" href="app-icon.png">
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Inline CSS ONLY -->
+  <style>
+    body {
+      background: linear-gradient(180deg, #0f172a, #e5e7eb);
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    input {
+      -webkit-user-select: text;
+      user-select: text;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Premium Matte Header -->
+<div class="mx-4 mt-6 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 shadow-2xl p-6 text-center">
+  <h1 class="text-2xl font-bold text-white tracking-wide">
+    ATD DIMENSION CALCULATOR
+  </h1>
+  <p class="text-sm text-slate-300 mt-1">
+    Developed by <b>Abhishek Pandey</b>
+  </p>
+</div>
+
+<!-- Main Card -->
+<main class="max-w-md mx-auto p-4">
+
+  <div class="bg-white/90 backdrop-blur rounded-3xl shadow-2xl p-6 space-y-4">
+
+    <div class="bg-white rounded-full py-3 text-center font-semibold shadow-inner">
+      3-Pulley Modified ATD
+    </div>
+
+    <div>
+      <label class="font-semibold text-slate-700">
+        Half Tension Length (m)
+      </label>
+      <input id="length" type="number" value="750"
+        class="w-full mt-1 p-4 rounded-xl bg-white shadow-inner focus:outline-none text-lg">
+    </div>
+
+    <div>
+      <label class="font-semibold text-slate-700">
+        Temperature (°C)
+      </label>
+      <input id="temperature" type="number" value="35"
+        class="w-full mt-1 p-4 rounded-xl bg-white shadow-inner focus:outline-none text-lg">
+    </div>
+
+    <button onclick="calculate()"
+      class="w-full py-4 rounded-2xl text-white font-bold text-lg
+             bg-gradient-to-r from-blue-700 to-blue-500
+             shadow-xl active:scale-95 transition">
+      Calculate Dimensions
+    </button>
+
+    <!-- Results -->
+    <div id="results" class="hidden bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl p-5 shadow-inner space-y-2">
+
+      <p class="font-semibold">
+        ΔT: <span id="deltaT">0</span> °C
+      </p>
+
+      <p class="text-lg font-bold">
+        X: <span id="resX_mm">0</span> mm
+        <span class="text-sm text-slate-500">
+          ( <span id="resX_m">0</span> m )
+        </span>
+      </p>
+
+      <p class="text-lg font-bold">
+        Y: <span id="resY_mm">0</span> mm
+        <span class="text-sm text-slate-500">
+          ( <span id="resY_m">0</span> m )
+        </span>
+      </p>
+
+      <p class="text-sm pt-2 border-t text-blue-700 font-semibold">
+        Reference Temperature =
+        <span class="bg-blue-100 px-2 py-0.5 rounded">35°C</span>
+        (Indian Railway TRD Standard)
+      </p>
+
+    </div>
+
+  </div>
+
+</main>
+
+<!-- Footer -->
+<footer class="text-center text-xs text-slate-700 mt-6 pb-6 space-y-1">
+  <p>
+    Formula: X / Y = 1300 / 2300 + (L × 1.7×10⁻⁵ × ΔT)
+  </p>
+  <p class="font-bold">
+    EASTERN RAILWAY – TRD / BASIRHAT
+  </p>
+  <p class="text-amber-600 font-semibold">
+    © 2026 Abhishek Pandey. All Rights Reserved.
+  </p>
+</footer>
+
+<!-- Scripts -->
+<script>
+function round(val, d) {
+  return Math.round((val + Number.EPSILON) * 10 ** d) / 10 ** d;
+}
+
+function calculate() {
+  const L = parseFloat(document.getElementById("length").value);
+  const T = parseFloat(document.getElementById("temperature").value);
+
+  if (isNaN(L) || isNaN(T)) {
+    alert("Please enter valid values");
+    return;
+  }
+
+  const T0 = 35;
+  const alpha = 1.7e-5;
+
+  const deltaT = T - T0;
+  const deltaL = L * alpha * deltaT * 1000;
+
+  const X = 1300 + deltaL;
+  const Y = 2300 + 3 * deltaL;
+
+  document.getElementById("deltaT").textContent = deltaT.toFixed(1);
+  document.getElementById("resX_mm").textContent = round(X, 2);
+  document.getElementById("resY_mm").textContent = round(Y, 2);
+  document.getElementById("resX_m").textContent = round(X / 1000, 3);
+  document.getElementById("resY_m").textContent = round(Y / 1000, 3);
+
+  document.getElementById("results").classList.remove("hidden");
+  document.getElementById("results").scrollIntoView({ behavior: "smooth" });
+}
+</script>
+
+<!-- ✅ SERVICE WORKER (Correct Place) -->
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("./service-worker.js")
+    .then(() => console.log("Service Worker Registered"))
+    .catch(err => console.error("SW registration failed", err));
+}
+</script>
+
+</body>
+</html>
