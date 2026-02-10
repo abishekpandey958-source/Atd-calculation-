@@ -4,130 +4,112 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>ATD Dimension Calculator</title>
-  
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1e293b">
   <link rel="icon" href="app-icon.png">
   <link rel="apple-touch-icon" href="app-icon.png">
-
-  <link rel="stylesheet" href="style.css">
   
-  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root { --railway-blue: #2563eb; }
+    body { background: linear-gradient(180deg, #0f172a, #e5e7eb); font-family: sans-serif; margin: 0; min-height: 100vh; color: #1e293b; }
+    .antialiased { -webkit-font-smoothing: antialiased; }
+    .main-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-radius: 1.5rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); margin: 1rem auto; max-width: 400px; padding: 1.5rem; }
+    .glass-input { background: #f1f5f9; border: 2px solid #e2e8f0; border-radius: 1rem; width: 100%; padding: 1rem; font-size: 1.125rem; box-sizing: border-box; margin-top: 0.25rem; }
+    .btn-3d { background: linear-gradient(145deg, #2563eb, #1e40af); color: white; border: none; border-radius: 1rem; padding: 1rem; font-weight: bold; width: 100%; box-shadow: 0 6px 0 #1e3a8a; cursor: pointer; }
+    .btn-3d:active { transform: translateY(4px); box-shadow: 0 2px 0 #1e3a8a; }
+    .reset-btn { background: #e2e8f0; border: none; border-radius: 1rem; padding: 1rem; font-weight: bold; width: 100%; color: #475569; }
+    .result-glass { background: rgba(219, 234, 254, 0.7); border-radius: 1rem; border: 1px solid #bfdbfe; padding: 1.25rem; margin-top: 1.25rem; }
+    .gauge-container { width: 32px; height: 140px; background: #cbd5e1; border-radius: 6px; position: relative; border: 2px solid #94a3b8; overflow: hidden; }
+    .gauge-weight { width: 100%; height: 12px; background: var(--railway-blue); position: absolute; left: 0; transition: bottom 0.6s ease; border-top: 2px solid #60a5fa; }
+    .gauge-label { position: absolute; left: 38px; font-size: 9px; font-weight: bold; color: #64748b; }
+    .flex { display: flex; } .space-x-6 > * + * { margin-left: 1.5rem; } .flex-1 { flex: 1; }
+    .hidden { display: none; } .text-center { text-align: center; }
+  </style>
 </head>
-
 <body class="antialiased">
 
-<div class="mx-4 mt-6 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 shadow-2xl p-6 text-center">
-  <h1 class="text-2xl font-bold text-white tracking-wide">ATD DIMENSION CALCULATOR</h1>
-  <p class="text-sm text-slate-300 mt-1">Developed by <b>Abhishek Pandey</b></p>
+<div style="margin: 1.5rem; padding: 1.5rem; border-radius: 1rem; background: linear-gradient(to bottom right, #1e293b, #0f172a); text-align: center; color: white; box-shadow: 0 10px 15px rgba(0,0,0,0.3);">
+  <h1 style="margin: 0; font-size: 1.5rem;">ATD DIMENSION CALCULATOR</h1>
+  <p style="margin: 0.25rem 0 0; color: #cbd5e1; font-size: 0.875rem;">Developed by <b>Abhishek Pandey</b></p>
 </div>
 
-<main class="max-w-md mx-auto p-4">
-  <div class="main-card p-6 space-y-5">
-    <div class="bg-blue-600 text-white rounded-full py-2 text-center font-semibold shadow-md text-sm uppercase tracking-wider">
-      3-Pulley Modified ATD
-    </div>
+<main class="main-card">
+  <div style="background: #2563eb; color: white; border-radius: 999px; padding: 0.5rem; text-align: center; font-weight: 600; font-size: 0.875rem; margin-bottom: 1.25rem;">3-PULLEY MODIFIED ATD</div>
 
-    <div class="space-y-4">
-      <div>
-        <label class="font-semibold text-slate-700 ml-1 text-sm">Half Tension Length (m)</label>
-        <input id="length" type="number" step="any" placeholder="eg 750" class="glass-input w-full mt-1 p-4 focus:outline-none text-lg">
-      </div>
-      <div>
-        <label class="font-semibold text-slate-700 ml-1 text-sm">Temperature (°C)</label>
-        <input id="temperature" type="number" step="any" placeholder="eg 35" class="glass-input w-full mt-1 p-4 focus:outline-none text-lg">
-      </div>
-    </div>
+  <div style="margin-bottom: 1rem;">
+    <label style="font-weight: 600; font-size: 0.875rem; color: #334155;">Half Tension Length (m)</label>
+    <input id="length" type="number" placeholder="eg 750" class="glass-input">
+  </div>
+  <div style="margin-bottom: 1.25rem;">
+    <label style="font-weight: 600; font-size: 0.875rem; color: #334155;">Temperature (°C)</label>
+    <input id="temperature" type="number" placeholder="eg 35" class="glass-input">
+  </div>
 
-    <div class="grid grid-cols-2 gap-3 pt-2">
-      <button onclick="calculate()" class="btn-3d">Calculate</button>
-      <button onclick="resetForm()" class="py-4 rounded-2xl text-slate-600 font-bold text-lg bg-slate-200 shadow-inner active:scale-95 transition">Reset</button>
-    </div>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+    <button onclick="calculate()" class="btn-3d">Calculate</button>
+    <button onclick="resetForm()" class="reset-btn">Reset</button>
+  </div>
 
-    <div id="results" class="hidden result-glass p-5 animate-in fade-in zoom-in duration-300">
-      <div class="flex space-x-6">
-        <div class="flex flex-col items-center justify-center space-y-1">
-          <div class="gauge-container">
-            <div id="gaugeWeight" class="gauge-weight" style="bottom: 50%;"></div>
-            <div class="gauge-label top-0">MAX</div>
-            <div class="gauge-label top-1/2 -translate-y-1/2">35°C</div>
-            <div class="gauge-label bottom-0">MIN</div>
-          </div>
-          <span class="text-[10px] font-bold text-slate-500 mt-2">Y-LEVEL</span>
+  <div id="results" class="hidden result-glass">
+    <div class="flex space-x-6">
+      <div class="text-center">
+        <div class="gauge-container">
+          <div id="gaugeWeight" class="gauge-weight" style="bottom: 50%;"></div>
+          <div class="gauge-label" style="top: 0;">MAX</div>
+          <div class="gauge-label" style="top: 50%; transform: translateY(-50%);">35°C</div>
+          <div class="gauge-label" style="bottom: 0;">MIN</div>
         </div>
-
-        <div class="flex-1 space-y-3">
-          <div class="flex justify-between items-center border-b border-blue-200 pb-2">
-            <span class="text-slate-600 text-xs font-medium">ΔT:</span>
-            <span class="font-bold text-blue-800 text-sm"><span id="deltaT">0</span> °C</span>
-          </div>
-
-          <div>
-            <p class="text-[10px] text-slate-500 uppercase font-black tracking-tight">X-Dimension (Pulley Center)</p>
-            <p class="text-xl font-black text-slate-800">
-              <span id="resX_mm">0</span> <span class="text-sm font-normal">mm</span>
-              <p class="text-xs text-indigo-600 font-bold">(<span id="resX_m">0</span> m)</p>
-            </p>
-          </div>
-
-          <div>
-            <p class="text-[10px] text-slate-500 uppercase font-black tracking-tight">Y-Dimension (Counterweight)</p>
-            <p class="text-xl font-black text-blue-700">
-              <span id="resY_mm">0</span> <span class="text-sm font-normal">mm</span>
-              <p class="text-xs text-indigo-600 font-bold">(<span id="resY_m">0</span> m)</p>
-            </p>
-          </div>
-        </div>
+        <div style="font-size: 10px; font-weight: bold; margin-top: 0.5rem; color: #64748b;">Y-LEVEL</div>
       </div>
-      <p class="text-[9px] pt-3 border-t border-blue-200 text-blue-700 font-medium italic mt-3">
-        * Standard: X=1300, Y=2300 at 35°C. α: 1.71 × 10⁻⁵
-      </p>
+      <div class="flex-1">
+        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #bfdbfe; padding-bottom: 0.5rem; margin-bottom: 0.75rem;">
+          <span style="font-size: 0.75rem; font-weight: 500;">ΔT:</span>
+          <span style="font-weight: bold; color: #1e40af;"><span id="deltaT">0</span> °C</span>
+        </div>
+        <p style="font-size: 10px; font-weight: 900; color: #64748b; margin: 0;">X-DIMENSION</p>
+        <p style="font-size: 1.25rem; font-weight: 900; margin: 0.25rem 0;">
+          <span id="resX_mm">0</span> mm <span style="font-size: 0.75rem; color: #4f46e5; font-weight: bold;">(<span id="resX_m">0</span> m)</span>
+        </p>
+        <p style="font-size: 10px; font-weight: 900; color: #64748b; margin: 0.75rem 0 0;">Y-DIMENSION</p>
+        <p style="font-size: 1.25rem; font-weight: 900; color: #1d4ed8; margin: 0.25rem 0;">
+          <span id="resY_mm">0</span> mm <span style="font-size: 0.75rem; color: #4f46e5; font-weight: bold;">(<span id="resY_m">0</span> m)</span>
+        </p>
+      </div>
     </div>
   </div>
 </main>
 
-<footer class="text-center text-xs text-slate-700 mt-6 pb-8 space-y-2">
-  <div class="bg-slate-800/10 py-2 px-4 inline-block rounded-lg mb-2">
-    Formula: <span class="text-amber-700 font-bold">X</span> = 1300 + [<span class="text-amber-700 font-bold">L</span> × <span class="text-amber-700 font-bold">α</span> × (35-<span class="text-amber-700 font-bold">T</span>)] | <span class="text-amber-700 font-bold">Y</span> = 2300 + 3[Δ<span class="text-amber-700 font-bold">X</span>]
+<footer style="text-align: center; font-size: 0.75rem; color: #334155; margin-top: 1.5rem; padding-bottom: 2rem;">
+  <div style="background: rgba(30, 41, 59, 0.1); padding: 0.5rem; border-radius: 0.5rem; display: inline-block; margin-bottom: 1rem;">
+    Formula: <b style="color: #b45309;">X</b> = 1300 + [<b style="color: #b45309;">L</b> × <b style="color: #b45309;">α</b> × (35-<b style="color: #b45309;">T</b>)] | <b style="color: #b45309;">Y</b> = 2300 + 3[Δ<b style="color: #b45309;">X</b>]
   </div>
-  <p class="font-bold tracking-widest text-slate-800 uppercase">EASTERN RAILWAY – TRD / BASIRHAT</p>
-  <p class="text-slate-500 font-semibold">© 2026 Abhishek Pandey. All Rights Reserved.</p>
+  <p style="font-weight: bold; letter-spacing: 0.05em;">EASTERN RAILWAY – TRD / BASIRHAT</p>
+  <p style="color: #64748b;">© 2026 Abhishek Pandey. All Rights Reserved.</p>
 </footer>
 
 <script>
-function round(val, d) { return Math.round((val + Number.EPSILON) * Math.pow(10, d)) / Math.pow(10, d); }
-
+function round(v, d) { return Math.round(v * Math.pow(10, d)) / Math.pow(10, d); }
 function calculate() {
   const L = parseFloat(document.getElementById("length").value);
   const T = parseFloat(document.getElementById("temperature").value);
-  if (isNaN(L) || isNaN(T)) { alert("Enter valid values"); return; }
-
-  const T_ref = 35;
-  const alpha = 0.0000171; // Updated to match your footer's 1.71 coeff
-  const expansionFactor = L * alpha * (T_ref - T) * 1000;
-  const X = 1300 + expansionFactor;
-  const Y = 2300 + (3 * expansionFactor);
-
-  document.getElementById("deltaT").textContent = (T - T_ref).toFixed(1);
-  document.getElementById("resX_mm").textContent = round(X, 2).toLocaleString();
-  document.getElementById("resY_mm").textContent = round(Y, 2).toLocaleString();
-  document.getElementById("resX_m").textContent = round(X / 1000, 3);
-  document.getElementById("resY_m").textContent = round(Y / 1000, 3);
-
-  // Gauge animation logic
-  let percentage = 50 + ((Y - 2300) / 10); 
-  percentage = Math.max(5, Math.min(95, percentage)); 
-  document.getElementById("gaugeWeight").style.bottom = percentage + "%";
-
+  if (isNaN(L) || isNaN(T)) return;
+  const expansion = L * 0.0000171 * (35 - T) * 1000;
+  const X = 1300 + expansion;
+  const Y = 2300 + (3 * expansion);
+  document.getElementById("deltaT").innerText = (T - 35).toFixed(1);
+  document.getElementById("resX_mm").innerText = Math.round(X);
+  document.getElementById("resY_mm").innerText = Math.round(Y);
+  document.getElementById("resX_m").innerText = round(X/1000, 3);
+  document.getElementById("resY_m").innerText = round(Y/1000, 3);
+  let pct = 50 + ((Y - 2300) / 10);
+  document.getElementById("gaugeWeight").style.bottom = Math.max(5, Math.min(95, pct)) + "%";
   document.getElementById("results").classList.remove("hidden");
 }
-
 function resetForm() {
   document.getElementById("length").value = "";
   document.getElementById("temperature").value = "";
   document.getElementById("results").classList.add("hidden");
 }
-
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => { navigator.serviceWorker.register('./service-worker.js'); });
 }
