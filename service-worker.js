@@ -1,12 +1,11 @@
-const cacheName = 'atd-calc-v2'; // Incremented version
+const cacheName = 'atd-calc-v3';
 const assets = [
   './',
   './index.html',
   './manifest.json',
-  'https://cdn.tailwindcss.com' // Caching the external Tailwind script for offline use
+  'https://cdn.tailwindcss.com' // THIS IS CRITICAL
 ];
 
-// Install: Saving files to the phone's memory
 self.addEventListener('install', (e) => {
   e.waitUntil(
     caches.open(cacheName).then((cache) => {
@@ -15,22 +14,6 @@ self.addEventListener('install', (e) => {
   );
 });
 
-// Activate: Cleaning up old cache versions
-self.addEventListener('activate', (e) => {
-  e.waitUntil(
-    caches.keys().then((keys) => {
-      return Promise.all(
-        keys.map((key) => {
-          if (key !== cacheName) {
-            return caches.delete(key);
-          }
-        })
-      );
-    })
-  );
-});
-
-// Fetch: Serving files from memory when offline
 self.addEventListener('fetch', (e) => {
   e.respondWith(
     caches.match(e.request).then((res) => {
