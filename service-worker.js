@@ -1,4 +1,5 @@
-const cacheName = 'atd-final-v1';
+// Incrementing to v3 to force the browser to download the new precision fix
+const cacheName = 'atd-final-v3'; 
 const assets = [
   './',
   './index.html',
@@ -6,15 +7,31 @@ const assets = [
 ];
 
 self.addEventListener('install', (e) => {
-  e.waitUntil(caches.open(cacheName).then((cache) => cache.addAll(assets)));
+  e.waitUntil(
+    caches.open(cacheName).then((cache) => {
+      return cache.addAll(assets);
+    })
+  );
 });
 
 self.addEventListener('activate', (e) => {
-  e.waitUntil(caches.keys().then((keys) => {
-    return Promise.all(keys.map((k) => k !== cacheName ? caches.delete(k) : null));
-  }));
+  e.waitUntil(
+    caches.keys().then((keys) => {
+      return Promise.all(
+        keys.map((k) => {
+          if (k !== cacheName) {
+            return caches.delete(k);
+          }
+        })
+      );
+    })
+  );
 });
 
 self.addEventListener('fetch', (e) => {
-  e.respondWith(caches.match(e.request).then((res) => res || fetch(e.request)));
+  e.respondWith(
+    caches.match(e.request).then((res) => {
+      return res || fetch(e.request);
+    })
+  );
 });
