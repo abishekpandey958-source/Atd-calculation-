@@ -6,16 +6,11 @@
 
   <title>ATD Dimension Calculator</title>
 
-  <!-- PWA -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1e293b">
   <link rel="icon" href="app-icon.png">
   <link rel="apple-touch-icon" href="app-icon.png">
 
-  <!-- External CSS -->
-  <link rel="stylesheet" href="style.css">
-
-  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
@@ -23,17 +18,53 @@
       background: linear-gradient(180deg, #0f172a, #e5e7eb);
       -webkit-user-select: none;
       user-select: none;
+      min-height: 100vh;
     }
     input {
       -webkit-user-select: text;
       user-select: text;
     }
+    .main-card {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      border-radius: 1.5rem;
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+    }
+    .glass-input {
+      background: rgba(241, 245, 249, 1);
+      border: 2px solid #e2e8f0;
+      border-radius: 1rem;
+      transition: all 0.2s;
+    }
+    .glass-input:focus {
+      border-color: #3b82f6;
+      background: white;
+    }
+    .btn-3d {
+      background: #2563eb;
+      color: white;
+      padding: 1rem;
+      border-radius: 1rem;
+      font-weight: bold;
+      font-size: 1.125rem;
+      box-shadow: 0 4px 0 #1d4ed8;
+      active: translateY(2px);
+      active: shadow-none;
+    }
+    .btn-3d:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #1d4ed8;
+    }
+    .result-glass {
+      background: rgba(219, 234, 254, 0.5);
+      border-radius: 1rem;
+      border: 1px solid #bfdbfe;
+    }
   </style>
 </head>
 
-<body>
+<body class="antialiased">
 
-<!-- Premium Matte Header -->
 <div class="mx-4 mt-6 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 shadow-2xl p-6 text-center">
   <h1 class="text-2xl font-bold text-white tracking-wide">
     ATD DIMENSION CALCULATOR
@@ -43,70 +74,73 @@
   </p>
 </div>
 
-<!-- Main Card -->
 <main class="max-w-md mx-auto p-4">
 
-  <div class="main-card p-6 space-y-4">
+  <div class="main-card p-6 space-y-5">
 
-    <div class="bg-white rounded-full py-3 text-center font-semibold shadow-inner">
+    <div class="bg-blue-600 text-white rounded-full py-2 text-center font-semibold shadow-md text-sm uppercase tracking-wider">
       3-Pulley Modified ATD
     </div>
 
-    <!-- INPUTS -->
-    <div>
-      <label class="font-semibold text-slate-700">
-        Half Tension Length (m)
-      </label>
-      <input id="length" type="number" placeholder="eg 750"
-       class="glass-input w-full mt-1 p-4 focus:outline-none text-lg" 
+    <div class="space-y-4">
+      <div>
+        <label class="font-semibold text-slate-700 ml-1 text-sm">
+          Half Tension Length (m)
+        </label>
+        <input id="length" type="number" step="any" placeholder="eg 750"
+         class="glass-input w-full mt-1 p-4 focus:outline-none text-lg">
+      </div>
+
+      <div>
+        <label class="font-semibold text-slate-700 ml-1 text-sm">
+          Temperature (°C)
+        </label>
+        <input id="temperature" type="number" step="any" placeholder="eg 35"
+          class="glass-input w-full mt-1 p-4 focus:outline-none text-lg">
+      </div>
     </div>
 
-    <div>
-      <label class="font-semibold text-slate-700">
-        Temperature (°C)
-      </label>
-      <input id="temperature" type="number" placeholder="eg 35"
-        class="glass-input w-full mt-1 p-4 focus:outline-none text-lg"
-    </div>
-
-    <!-- BUTTONS -->
-    <div class="grid grid-cols-2 gap-3">
-      <button onclick="calculate()" class="btn-3d transition">
-  Calculate
+    <div class="grid grid-cols-2 gap-3 pt-2">
+      <button onclick="calculate()" class="btn-3d">
+        Calculate
       </button>
 
       <button onclick="resetForm()"
-        class="py-4 rounded-2xl text-slate-800 font-bold text-lg
+        class="py-4 rounded-2xl text-slate-600 font-bold text-lg
                bg-slate-200 shadow-inner active:scale-95 transition">
         Reset
       </button>
     </div>
 
-    <!-- Results -->
-    <div id="results" class="hidden result-glass p-5 space-y-2">
+    <div id="results" class="hidden result-glass p-5 space-y-3 animate-in fade-in zoom-in duration-300">
 
-      <p class="font-semibold">
-        ΔT: <span id="deltaT">0</span> °C
-      </p>
+      <div class="flex justify-between items-center border-b border-blue-200 pb-2">
+        <span class="text-slate-600 font-medium">Temp Difference (ΔT):</span>
+        <span class="font-bold text-blue-800"><span id="deltaT">0</span> °C</span>
+      </div>
 
-      <p class="text-lg font-bold">
-        X: <span id="resX_mm">0</span> mm
-        <span class="text-sm text-slate-500">
-          ( <span id="resX_m">0</span> m )
-        </span>
-      </p>
+      <div class="space-y-1">
+        <p class="text-xs text-slate-500 uppercase font-bold tracking-tight">X-Dimension (Pulley Center)</p>
+        <p class="text-2xl font-black text-slate-800">
+          <span id="resX_mm">0</span> <span class="text-lg font-normal">mm</span>
+          <span class="text-sm text-slate-500 font-normal ml-2">
+            ( <span id="resX_m">0</span> m )
+          </span>
+        </p>
+      </div>
 
-      <p class="text-lg font-bold">
-        Y: <span id="resY_mm">0</span> mm
-        <span class="text-sm text-slate-500">
-          ( <span id="resY_m">0</span> m )
-        </span>
-      </p>
+      <div class="space-y-1">
+        <p class="text-xs text-slate-500 uppercase font-bold tracking-tight">Y-Dimension (Counterweight)</p>
+        <p class="text-2xl font-black text-blue-700">
+          <span id="resY_mm">0</span> <span class="text-lg font-normal">mm</span>
+          <span class="text-sm text-slate-500 font-normal ml-2">
+            ( <span id="resY_m">0</span> m )
+          </span>
+        </p>
+      </div>
 
-      <p class="text-sm pt-2 border-t text-blue-700 font-semibold">
-        Reference Temperature =
-        <span class="bg-blue-100 px-2 py-0.5 rounded">35°C</span>
-        (Indian Railway TRD Standard)
+      <p class="text-[10px] pt-2 border-t border-blue-200 text-blue-700 font-medium italic">
+        * Standard: X=1300, Y=2300 at 35°C. Expansion coeff: 1.71 × 10⁻⁵
       </p>
 
     </div>
@@ -115,23 +149,23 @@
 
 </main>
 
-<!-- Footer -->
-<footer class="text-center text-xs text-slate-700 mt-6 pb-6 space-y-1">
-  <p>
-    Formula: X / Y = 1300 / 2300 + (L × 1.7×10⁻⁵ × ΔT)
-  </p>
-  <p class="font-bold">
+
+
+<footer class="text-center text-xs text-slate-700 mt-6 pb-8 space-y-2">
+  <div class="bg-slate-800/10 py-2 px-4 inline-block rounded-lg mb-2">
+    Formula: X = 1300 + [L × α × (35-T)] | Y = 2300 + 3[ΔX]
+  </div>
+  <p class="font-bold tracking-widest text-slate-800 uppercase">
     EASTERN RAILWAY – TRD / BASIRHAT
   </p>
-  <p class="text-amber-600 font-semibold">
+  <p class="text-slate-500 font-semibold">
     © 2026 Abhishek Pandey. All Rights Reserved.
   </p>
 </footer>
 
-<!-- Scripts -->
 <script>
 function round(val, d) {
-  return Math.round((val + Number.EPSILON) * 10 ** d) / 10 ** d;
+  return Math.round((val + Number.EPSILON) * Math.pow(10, d)) / Math.pow(10, d);
 }
 
 function calculate() {
@@ -139,25 +173,28 @@ function calculate() {
   const T = parseFloat(document.getElementById("temperature").value);
 
   if (isNaN(L) || isNaN(T)) {
-    alert("Please enter valid values");
+    alert("Please enter valid numeric values for Length and Temperature.");
     return;
   }
 
-  const T0 = 35;
-  const alpha = 1.7e-5;
+  const T_ref = 35;
+  const alpha = 0.000017; // Coefficient of linear expansion
 
-  const deltaT = T - T0;
-  const deltaL = L * alpha * deltaT * 1000;
+  // Expansion Factor Logic
+  // Delta X = L * alpha * (35 - T) * 1000 (convert to mm)
+  const expansionFactor = L * alpha * (T_ref - T) * 1000;
 
-  const X = 1300 + deltaL;
-  const Y = 2300 + 3 * deltaL;
+  const X = 1300 + expansionFactor;
+  const Y = 2300 + (3 * expansionFactor);
 
-  document.getElementById("deltaT").textContent = deltaT.toFixed(1);
-  document.getElementById("resX_mm").textContent = round(X, 2);
-  document.getElementById("resY_mm").textContent = round(Y, 2);
+  // Update UI
+  document.getElementById("deltaT").textContent = (T - T_ref).toFixed(1);
+  document.getElementById("resX_mm").textContent = round(X, 2).toLocaleString();
+  document.getElementById("resY_mm").textContent = round(Y, 2).toLocaleString();
   document.getElementById("resX_m").textContent = round(X / 1000, 3);
   document.getElementById("resY_m").textContent = round(Y / 1000, 3);
 
+  // Show Results
   document.getElementById("results").classList.remove("hidden");
 }
 
@@ -165,13 +202,6 @@ function resetForm() {
   document.getElementById("length").value = "";
   document.getElementById("temperature").value = "";
   document.getElementById("results").classList.add("hidden");
-}
-</script>
-
-<!-- Service Worker -->
-<script>
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("./service-worker.js");
 }
 </script>
 
