@@ -10,7 +10,7 @@
   <link rel="apple-touch-icon" href="app-icon.png">
   
   <style>
-    :root { --railway-blue: #2563eb; }
+    :root { --railway-blue: #2563eb; --railway-dark: #1e3a8a; }
     body { background: linear-gradient(180deg, #0f172a, #e5e7eb); font-family: sans-serif; margin: 0; min-height: 100vh; color: #1e293b; }
     .antialiased { -webkit-font-smoothing: antialiased; }
     .main-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-radius: 1.5rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); margin: 1rem auto; max-width: 400px; padding: 1.5rem; }
@@ -25,9 +25,20 @@
     .flex { display: flex; } .space-x-6 > * + * { margin-left: 1.5rem; } .flex-1 { flex: 1; }
     .hidden { display: none; } .text-center { text-align: center; }
     
-    /* Info Section Styles */
-    .info-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 1rem; padding: 1rem; margin-top: 1rem; font-size: 0.8rem; line-height: 1.4; color: #475569; }
-    .info-toggle { color: #2563eb; font-size: 0.8rem; font-weight: bold; cursor: pointer; text-decoration: underline; margin-top: 10px; display: block; text-align: center; }
+    /* HIGH VISIBILITY INFO BOX */
+    .info-box { 
+      background: #eff6ff; 
+      border: 3px solid #2563eb; 
+      border-radius: 1.25rem; 
+      padding: 1.25rem; 
+      margin-top: 1.5rem; 
+      font-size: 0.9rem; 
+      line-height: 1.6; 
+      color: #1e3a8a; 
+      box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.1);
+    }
+    .info-box b { color: #1e293b; font-size: 1rem; display: block; margin-bottom: 0.5rem; border-bottom: 1px solid #bfdbfe; }
+    .info-toggle { color: #2563eb; font-size: 0.85rem; font-weight: 800; cursor: pointer; text-decoration: underline; margin-top: 15px; display: block; text-align: center; text-transform: uppercase; letter-spacing: 0.5px; }
   </style>
 </head>
 <body class="antialiased">
@@ -46,7 +57,7 @@
   </div>
   <div style="margin-bottom: 1.25rem;">
     <label style="font-weight: 600; font-size: 0.875rem; color: #334155;">Temperature (°C)</label>
-    <input id="temperature" type="number" placeholder="eg 35" class="glass-input">
+    <input id="temperature" type="number" placeholder="eg 22" class="glass-input">
   </div>
 
   <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
@@ -84,12 +95,12 @@
 
   <span class="info-toggle" onclick="toggleInfo()">View Engineering Standards</span>
   <div id="infoBox" class="hidden info-box">
-    <b>Reference Values:</b><br>
-    • Temp Ref: 35°C<br>
-    • Standard X: 1300 mm<br>
-    • Standard Y: 2300 mm<br>
-    • Alpha (α): 1.71 × 10⁻⁵ (IR Standard)<br>
-    • Ratio: 3:1 (Modified 3-Pulley)
+    <b>Reference Values:</b>
+    • Temp Ref: <b>35°C</b><br>
+    • Standard X: <b>1300 mm</b><br>
+    • Standard Y: <b>2300 mm</b><br>
+    • Alpha (α): <b>1.71 × 10⁻⁵</b> (IR Standard)<br>
+    • Ratio: <b>3:1</b> (Modified 3-Pulley)
   </div>
 </main>
 
@@ -100,11 +111,7 @@
 
 <script>
 function round(v, d) { return Math.round(v * Math.pow(10, d)) / Math.pow(10, d); }
-
-function toggleInfo() {
-  const box = document.getElementById("infoBox");
-  box.classList.toggle("hidden");
-}
+function toggleInfo() { document.getElementById("infoBox").classList.toggle("hidden"); }
 
 function calculate() {
   const L = parseFloat(document.getElementById("length").value);
