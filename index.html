@@ -48,8 +48,7 @@
       font-weight: bold;
       font-size: 1.125rem;
       box-shadow: 0 4px 0 #1d4ed8;
-      active: translateY(2px);
-      active: shadow-none;
+      transition: all 0.1s;
     }
     .btn-3d:active {
       transform: translateY(2px);
@@ -149,8 +148,6 @@
 
 </main>
 
-
-
 <footer class="text-center text-xs text-slate-700 mt-6 pb-8 space-y-2">
   <div class="bg-slate-800/10 py-2 px-4 inline-block rounded-lg mb-2">
     Formula: X = 1300 + [L × α × (35-T)] | Y = 2300 + 3[ΔX]
@@ -164,6 +161,7 @@
 </footer>
 
 <script>
+/* Calculation Logic */
 function round(val, d) {
   return Math.round((val + Number.EPSILON) * Math.pow(10, d)) / Math.pow(10, d);
 }
@@ -178,23 +176,19 @@ function calculate() {
   }
 
   const T_ref = 35;
-  const alpha = 0.000017; // Coefficient of linear expansion
+  const alpha = 0.000017;
 
-  // Expansion Factor Logic
-  // Delta X = L * alpha * (35 - T) * 1000 (convert to mm)
   const expansionFactor = L * alpha * (T_ref - T) * 1000;
 
   const X = 1300 + expansionFactor;
   const Y = 2300 + (3 * expansionFactor);
 
-  // Update UI
   document.getElementById("deltaT").textContent = (T - T_ref).toFixed(1);
   document.getElementById("resX_mm").textContent = round(X, 2).toLocaleString();
   document.getElementById("resY_mm").textContent = round(Y, 2).toLocaleString();
   document.getElementById("resX_m").textContent = round(X / 1000, 3);
   document.getElementById("resY_m").textContent = round(Y / 1000, 3);
 
-  // Show Results
   document.getElementById("results").classList.remove("hidden");
 }
 
@@ -202,6 +196,19 @@ function resetForm() {
   document.getElementById("length").value = "";
   document.getElementById("temperature").value = "";
   document.getElementById("results").classList.add("hidden");
+}
+
+/* Service Worker Registration */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js')
+      .then(registration => {
+        console.log('SW registered with scope:', registration.scope);
+      })
+      .catch(error => {
+        console.error('SW registration failed:', error);
+      });
+  });
 }
 </script>
 
