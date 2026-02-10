@@ -46,19 +46,24 @@ input {
     inset 4px 4px 12px rgba(0, 0, 0, 0.12);
 }
 .btn-3d {
-  background: linear-gradient(145deg, #2563eb, #3b82f6);
-  border-radius: 22px;
+  background: linear-gradient(145deg, #2563eb, #1e40af);
+  border-radius: 16px;
+
+  height: 56px;              /* ✅ fixed height */
+  line-height: 56px;         /* ✅ centers text vertically */
+
   box-shadow:
-    0 10px 25px rgba(37, 99, 235, 0.5),
-    inset 0 2px 4px rgba(255, 255, 255, 0.25);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+    0 8px 0 #1e3a8a,
+    0 15px 30px rgba(0,0,0,0.25);
+
+  text-align: center;
 }
 
 .btn-3d:active {
-  transform: translateY(3px);
+  transform: translateY(6px);
   box-shadow:
-    0 6px 15px rgba(37, 99, 235, 0.6),
-    inset 0 3px 6px rgba(0, 0, 0, 0.25);
+    0 2px 0 #1e3a8a,
+    0 8px 20px rgba(0,0,0,0.2);
 }
 .result-glass {
   background: rgba(240, 249, 255, 0.75);
