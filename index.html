@@ -16,7 +16,6 @@
     .btn-3d:active { transform: translateY(4px); box-shadow: 0 2px 0 #1e3a8a; }
     .reset-btn { background: #e2e8f0; border: none; border-radius: 1rem; padding: 1rem; font-weight: bold; width: 100%; color: #475569; }
     
-    /* RESTORED RESULT STYLING */
     .result-glass { background: #eff6ff; border-radius: 1rem; border: 2px solid #bfdbfe; padding: 1.25rem; margin-top: 1.25rem; }
     .gauge-container { width: 32px; height: 140px; background: #cbd5e1; border-radius: 6px; position: relative; border: 2px solid #94a3b8; overflow: hidden; }
     .gauge-weight { width: 100%; height: 12px; background: var(--railway-blue); position: absolute; left: 0; transition: bottom 0.6s ease; border-top: 2px solid #60a5fa; }
@@ -62,18 +61,18 @@
       </div>
       <div class="flex-1">
         <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #bfdbfe; padding-bottom: 5px; margin-bottom: 8px;">
-          <span style="font-size: 0.75rem; font-weight: bold;">ΔT:</span>
+          <span style="font-size: 0.85rem; font-weight: bold;">ΔT:</span>
           <span style="font-weight: bold; color: #1e40af;"><span id="deltaT">0</span> °C</span>
         </div>
         
-        <p style="font-size: 0.7rem; font-weight: bold; margin: 0; color: #64748b;">X-DIMENSION (2 Dec)</p>
-        <p style="font-size: 1.2rem; font-weight: 900; margin: 2px 0;">
-            <span id="resX_mm">0</span> mm <span style="font-size: 0.75rem; color: #4f46e5;">(<span id="resX_m">0</span> m)</span>
+        <p style="font-size: 0.85rem; font-weight: 800; margin: 0; color: #1e293b; letter-spacing: 0.05em;">X-DIMENSION</p>
+        <p style="font-size: 1.4rem; font-weight: 900; margin: 4px 0;">
+            <span id="resX_mm">0</span> mm <span style="font-size: 0.9rem; color: #4f46e5; font-weight: bold;">(<span id="resX_m">0</span> m)</span>
         </p>
         
-        <p style="font-size: 0.7rem; font-weight: bold; margin: 10px 0 0; color: #64748b;">Y-DIMENSION (2 Dec)</p>
-        <p style="font-size: 1.2rem; font-weight: 900; color: #1e40af; margin: 2px 0;">
-            <span id="resY_mm">0</span> mm <span style="font-size: 0.75rem; color: #4f46e5;">(<span id="resY_m">0</span> m)</span>
+        <p style="font-size: 0.85rem; font-weight: 800; margin: 12px 0 0; color: #1e293b; letter-spacing: 0.05em;">Y-DIMENSION</p>
+        <p style="font-size: 1.4rem; font-weight: 900; color: #1e40af; margin: 4px 0;">
+            <span id="resY_mm">0</span> mm <span style="font-size: 0.9rem; color: #4f46e5; font-weight: bold;">(<span id="resY_m">0</span> m)</span>
         </p>
       </div>
     </div>
@@ -91,7 +90,7 @@
 
 <footer style="text-align: center; padding: 20px 0; color: #475569; font-size: 0.75rem;">
   <b>EASTERN RAILWAY – TRD / BASIRHAT</b><br>
-  © 2026 Abhishek Pandey. All Rights Reserved. v1.3
+  © 2026 Abhishek Pandey. All Rights Reserved. v1.4
 </footer>
 
 <script>
@@ -110,7 +109,6 @@ function calculate() {
   const X = 1300 + expansion;
   const Y = 2300 + (3 * expansion);
 
-  // RESTORED DISPLAY LOGIC
   document.getElementById("deltaT").innerText = (T - T_ref).toFixed(1);
   document.getElementById("resX_mm").innerText = X.toFixed(2);
   document.getElementById("resY_mm").innerText = Y.toFixed(2);
