@@ -24,6 +24,10 @@
     .gauge-label { position: absolute; left: 38px; font-size: 9px; font-weight: bold; color: #64748b; }
     .flex { display: flex; } .space-x-6 > * + * { margin-left: 1.5rem; } .flex-1 { flex: 1; }
     .hidden { display: none; } .text-center { text-align: center; }
+    
+    /* Info Section Styles */
+    .info-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 1rem; padding: 1rem; margin-top: 1rem; font-size: 0.8rem; line-height: 1.4; color: #475569; }
+    .info-toggle { color: #2563eb; font-size: 0.8rem; font-weight: bold; cursor: pointer; text-decoration: underline; margin-top: 10px; display: block; text-align: center; }
   </style>
 </head>
 <body class="antialiased">
@@ -66,50 +70,72 @@
           <span style="font-size: 0.75rem; font-weight: 500;">ΔT:</span>
           <span style="font-weight: bold; color: #1e40af;"><span id="deltaT">0</span> °C</span>
         </div>
-        <p style="font-size: 10px; font-weight: 900; color: #64748b; margin: 0;">X-DIMENSION</p>
+        <p style="font-size: 10px; font-weight: 900; color: #64748b; margin: 0;">X-DIMENSION (2 Dec)</p>
         <p style="font-size: 1.25rem; font-weight: 900; margin: 0.25rem 0;">
           <span id="resX_mm">0</span> mm <span style="font-size: 0.75rem; color: #4f46e5; font-weight: bold;">(<span id="resX_m">0</span> m)</span>
         </p>
-        <p style="font-size: 10px; font-weight: 900; color: #64748b; margin: 0.75rem 0 0;">Y-DIMENSION</p>
+        <p style="font-size: 10px; font-weight: 900; color: #64748b; margin: 0.75rem 0 0;">Y-DIMENSION (2 Dec)</p>
         <p style="font-size: 1.25rem; font-weight: 900; color: #1d4ed8; margin: 0.25rem 0;">
           <span id="resY_mm">0</span> mm <span style="font-size: 0.75rem; color: #4f46e5; font-weight: bold;">(<span id="resY_m">0</span> m)</span>
         </p>
       </div>
     </div>
   </div>
+
+  <span class="info-toggle" onclick="toggleInfo()">View Engineering Standards</span>
+  <div id="infoBox" class="hidden info-box">
+    <b>Reference Values:</b><br>
+    • Temp Ref: 35°C<br>
+    • Standard X: 1300 mm<br>
+    • Standard Y: 2300 mm<br>
+    • Alpha (α): 1.71 × 10⁻⁵ (IR Standard)<br>
+    • Ratio: 3:1 (Modified 3-Pulley)
+  </div>
 </main>
 
 <footer style="text-align: center; font-size: 0.75rem; color: #334155; margin-top: 1.5rem; padding-bottom: 2rem;">
-  <div style="background: rgba(30, 41, 59, 0.1); padding: 0.5rem; border-radius: 0.5rem; display: inline-block; margin-bottom: 1rem;">
-    Formula: <b style="color: #b45309;">X</b> = 1300 + [<b style="color: #b45309;">L</b> × <b style="color: #b45309;">α</b> × (35-<b style="color: #b45309;">T</b>)] | <b style="color: #b45309;">Y</b> = 2300 + 3[Δ<b style="color: #b45309;">X</b>]
-  </div>
   <p style="font-weight: bold; letter-spacing: 0.05em;">EASTERN RAILWAY – TRD / BASIRHAT</p>
   <p style="color: #64748b;">© 2026 Abhishek Pandey. All Rights Reserved.</p>
 </footer>
 
 <script>
 function round(v, d) { return Math.round(v * Math.pow(10, d)) / Math.pow(10, d); }
+
+function toggleInfo() {
+  const box = document.getElementById("infoBox");
+  box.classList.toggle("hidden");
+}
+
 function calculate() {
   const L = parseFloat(document.getElementById("length").value);
   const T = parseFloat(document.getElementById("temperature").value);
   if (isNaN(L) || isNaN(T)) return;
-  const expansion = L * 0.0000171 * (35 - T) * 1000;
+
+  const alpha = 0.0000171; 
+  const T_ref = 35;
+  const expansion = L * alpha * (T_ref - T) * 1000;
+  
   const X = 1300 + expansion;
   const Y = 2300 + (3 * expansion);
-  document.getElementById("deltaT").innerText = (T - 35).toFixed(1);
-  document.getElementById("resX_mm").innerText = Math.round(X);
-  document.getElementById("resY_mm").innerText = Math.round(Y);
+
+  document.getElementById("deltaT").innerText = (T - T_ref).toFixed(1);
+  document.getElementById("resX_mm").innerText = X.toFixed(2);
+  document.getElementById("resY_mm").innerText = Y.toFixed(2);
   document.getElementById("resX_m").innerText = round(X/1000, 3);
   document.getElementById("resY_m").innerText = round(Y/1000, 3);
+  
   let pct = 50 + ((Y - 2300) / 10);
   document.getElementById("gaugeWeight").style.bottom = Math.max(5, Math.min(95, pct)) + "%";
   document.getElementById("results").classList.remove("hidden");
 }
+
 function resetForm() {
   document.getElementById("length").value = "";
   document.getElementById("temperature").value = "";
   document.getElementById("results").classList.add("hidden");
+  document.getElementById("infoBox").classList.add("hidden");
 }
+
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => { navigator.serviceWorker.register('./service-worker.js'); });
 }
