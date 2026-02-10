@@ -1,4 +1,4 @@
-const cacheName = 'atd-calc-v3';
+const cacheName = 'atd-calc-v4';
 const assets = [
   './',
   './index.html',
