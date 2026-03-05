@@ -1,11 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 <title>ATD Dimension Calculator</title>
 
+<link rel="manifest" href="manifest.json">
+
+<meta name="theme-color" content="#1e293b">
+
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
 <style>
+
+:root{
+--railway-blue:#2563eb;
+}
 
 body{
 background:linear-gradient(180deg,#0f172a,#e5e7eb);
@@ -16,30 +31,31 @@ color:#1e293b;
 }
 
 .main-card{
-background:white;
-border-radius:20px;
+background:rgba(255,255,255,0.95);
+border-radius:1.5rem;
 box-shadow:0 20px 25px rgba(0,0,0,0.2);
-margin:20px auto;
-max-width:420px;
-padding:20px;
+margin:1rem auto;
+max-width:400px;
+padding:1.5rem;
 }
 
 .glass-input{
 background:#f1f5f9;
 border:2px solid #e2e8f0;
-border-radius:12px;
+border-radius:1rem;
 width:100%;
-padding:14px;
-font-size:16px;
-margin-top:5px;
+padding:1rem;
+font-size:1.1rem;
+box-sizing:border-box;
+margin-top:0.25rem;
 }
 
 .btn-3d{
 background:linear-gradient(145deg,#2563eb,#1e40af);
 color:white;
 border:none;
-border-radius:12px;
-padding:14px;
+border-radius:1rem;
+padding:1rem;
 font-weight:bold;
 width:100%;
 box-shadow:0 6px 0 #1e3a8a;
@@ -54,8 +70,8 @@ box-shadow:0 2px 0 #1e3a8a;
 .reset-btn{
 background:#e2e8f0;
 border:none;
-border-radius:12px;
-padding:14px;
+border-radius:1rem;
+padding:1rem;
 font-weight:bold;
 width:100%;
 color:#475569;
@@ -63,15 +79,15 @@ color:#475569;
 
 .result-glass{
 background:#eff6ff;
-border-radius:12px;
+border-radius:1rem;
 border:2px solid #bfdbfe;
-padding:20px;
-margin-top:20px;
+padding:1.25rem;
+margin-top:1.25rem;
 }
 
 .gauge-container{
-width:34px;
-height:150px;
+width:32px;
+height:140px;
 background:#cbd5e1;
 border-radius:6px;
 position:relative;
@@ -81,34 +97,27 @@ overflow:hidden;
 
 .gauge-weight{
 width:100%;
-height:14px;
-background:#2563eb;
+height:12px;
+background:var(--railway-blue);
 position:absolute;
 left:0;
 transition:bottom 0.6s ease;
 }
 
+.flex{display:flex;}
+.space-x-6>*+*{margin-left:1.5rem;}
+.flex-1{flex:1;}
+
 .hidden{display:none;}
-
-.warning{
-margin-top:10px;
-font-weight:bold;
-color:#dc2626;
-}
-
-.ok{
-margin-top:10px;
-font-weight:bold;
-color:#16a34a;
-}
 
 .info-box{
 background:#dbeafe;
 border:3px solid #2563eb;
-border-radius:16px;
-padding:16px;
-margin-top:20px;
+border-radius:1.25rem;
+padding:1.25rem;
+margin-top:1.5rem;
 color:#1e3a8a;
+font-weight:500;
 }
 
 .info-toggle{
@@ -119,7 +128,19 @@ text-decoration:underline;
 margin-top:15px;
 display:block;
 text-align:center;
-font-size:13px;
+font-size:0.85rem;
+}
+
+.warning{
+color:#dc2626;
+font-weight:bold;
+margin-top:10px;
+}
+
+.ok{
+color:#16a34a;
+font-weight:bold;
+margin-top:10px;
 }
 
 </style>
@@ -127,58 +148,58 @@ font-size:13px;
 
 <body>
 
-<div style="margin:20px;padding:15px;border-radius:12px;background:#1e293b;text-align:center;color:white;">
-<h2 style="margin:0;">ATD CALCULATOR</h2>
-<p style="margin:5px 0 0;color:#94a3b8;font-size:12px;">Developed by <b>Abhishek Pandey</b></p>
+<div style="margin:1.5rem;padding:1.25rem;border-radius:1rem;background:#1e293b;text-align:center;color:white;">
+<h1 style="margin:0;font-size:1.4rem;">ATD CALCULATOR</h1>
+<p style="margin:5px 0 0;color:#94a3b8;font-size:0.8rem;">Developed by <b>Abhishek Pandey</b></p>
 </div>
 
 <main class="main-card">
 
-<div style="background:#2563eb;color:white;border-radius:16px;padding:8px;text-align:center;font-weight:bold;margin-bottom:20px;">
+<div style="background:#2563eb;color:white;border-radius:20px;padding:8px;text-align:center;font-weight:bold;margin-bottom:20px;">
 3-PULLEY MODIFIED ATD
 </div>
 
-<div>
-<label><b>Half Tension Length (m)</b></label>
-<input id="length" type="number" placeholder="Example 750" class="glass-input">
+<div style="margin-bottom:15px;">
+<label style="font-weight:bold;font-size:0.9rem;">Half Tension Length (m)</label>
+<input id="length" type="number" placeholder="eg 750" class="glass-input">
 </div>
 
-<div style="margin-top:15px;">
-<label><b>Temperature (°C)</b></label>
-<input id="temperature" type="number" placeholder="Example 35" class="glass-input">
+<div style="margin-bottom:20px;">
+<label style="font-weight:bold;font-size:0.9rem;">Temperature (°C)</label>
+<input id="temperature" type="number" placeholder="eg 35" class="glass-input">
 </div>
 
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px;">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
 <button onclick="calculate()" class="btn-3d">Calculate</button>
 <button onclick="resetForm()" class="reset-btn">Reset</button>
 </div>
 
 <div id="results" class="hidden result-glass">
 
-<div style="display:flex;gap:25px">
+<div class="flex space-x-6">
 
-<div style="text-align:center">
+<div style="text-align:center;">
 <div class="gauge-container">
-<div id="gaugeWeight" class="gauge-weight" style="bottom:50%"></div>
+<div id="gaugeWeight" class="gauge-weight" style="bottom:50%;"></div>
 </div>
-<div style="font-size:11px;font-weight:bold;margin-top:5px">Y-LEVEL</div>
-</div>
-
-<div style="flex:1">
-
-<div style="display:flex;justify-content:space-between;border-bottom:1px solid #bfdbfe;padding-bottom:6px;margin-bottom:10px;">
-<span><b>ΔT</b></span>
-<span id="deltaT"></span>
+<div style="font-size:10px;font-weight:bold;margin-top:5px;">Y-LEVEL</div>
 </div>
 
-<p style="font-weight:800;margin:0;">X DIMENSION</p>
-<p style="font-size:24px;font-weight:900;margin:4px 0;">
-<span id="resX_mm"></span> mm
+<div class="flex-1">
+
+<div style="display:flex;justify-content:space-between;border-bottom:1px solid #bfdbfe;padding-bottom:5px;margin-bottom:8px;">
+<span style="font-size:0.85rem;font-weight:bold;">ΔT:</span>
+<span style="font-weight:bold;color:#1e40af;"><span id="deltaT">0</span> °C</span>
+</div>
+
+<p style="font-size:0.85rem;font-weight:800;margin:0;">X-DIMENSION</p>
+<p style="font-size:1.4rem;font-weight:900;margin:4px 0;">
+<span id="resX_mm">0</span> mm
 </p>
 
-<p style="font-weight:800;margin-top:10px;">Y DIMENSION</p>
-<p style="font-size:24px;font-weight:900;color:#1e40af;margin:4px 0;">
-<span id="resY_mm"></span> mm
+<p style="font-size:0.85rem;font-weight:800;margin:12px 0 0;">Y-DIMENSION</p>
+<p style="font-size:1.4rem;font-weight:900;color:#1e40af;margin:4px 0;">
+<span id="resY_mm">0</span> mm
 </p>
 
 <div id="status"></div>
@@ -199,16 +220,15 @@ Std Y: 2300 mm<br>
 X + Y = 3600 mm<br><br>
 
 Alpha (α): <b>1.7 × 10⁻⁵</b><br>
-Pulley Ratio: <b>3 : 1</b><br>
-System: Modified 3-Pulley ATD
+Ratio: <b>3:1</b> Modified Pulley
 
 </div>
 
 </main>
 
-<footer style="text-align:center;padding:20px;color:#475569;font-size:12px;">
+<footer style="text-align:center;padding:20px;color:#475569;font-size:0.75rem;">
 <b>EASTERN RAILWAY – TRD / BASIRHAT</b><br>
-© 2026 Abhishek Pandey
+© 2026 Abhishek Pandey. All Rights Reserved. v1.5
 </footer>
 
 <script>
@@ -222,7 +242,7 @@ function calculate(){
 const L=parseFloat(document.getElementById("length").value);
 const T=parseFloat(document.getElementById("temperature").value);
 
-if(isNaN(L)||isNaN(T)){alert("Enter valid values");return;}
+if(isNaN(L)||isNaN(T)){return;}
 
 const alpha=0.000017;
 const Tref=35;
@@ -234,11 +254,12 @@ const expansion=L*alpha*deltaT*1000;
 const X=1300+expansion;
 const Y=3600-X;
 
-document.getElementById("deltaT").innerText=deltaT.toFixed(1)+" °C";
+document.getElementById("deltaT").innerText=deltaT.toFixed(1);
 document.getElementById("resX_mm").innerText=X.toFixed(2);
 document.getElementById("resY_mm").innerText=Y.toFixed(2);
 
 let pct=50+((Y-2300)/10);
+
 document.getElementById("gaugeWeight").style.bottom=Math.max(5,Math.min(95,pct))+"%";
 
 let status=document.getElementById("status");
@@ -264,6 +285,12 @@ document.getElementById("temperature").value="";
 document.getElementById("results").classList.add("hidden");
 document.getElementById("infoBox").classList.add("hidden");
 
+}
+
+if('serviceWorker' in navigator){
+window.addEventListener('load',()=>{
+navigator.serviceWorker.register('./service-worker.js');
+});
 }
 
 </script>
