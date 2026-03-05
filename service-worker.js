@@ -1,5 +1,5 @@
 // Incrementing to v3 to force the browser to download the new precision fix
-const cacheName = 'atd-calculator-v1.6'; 
+const cacheName = 'atd-calculator-v2.0'; 
 const assets = [
   './',
   './index.html',
