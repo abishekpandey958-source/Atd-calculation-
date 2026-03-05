@@ -1,4 +1,5 @@
-const CACHE_NAME = "trd-atd-calculator-v2.2";
+const CACHE_NAME = "trd-atd-calculator-v2.2"; 
+
 
 const urlsToCache = [
   "./",
