@@ -5,13 +5,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ATD Dimension Calculator</title>
+<title>ATD Calculator</title>
 
 <style>
 
 body{
 font-family:Arial;
-background:#eef2f7;
+background:#f1f5f9;
 margin:0;
 }
 
@@ -28,33 +28,27 @@ max-width:420px;
 margin:auto;
 margin-top:20px;
 padding:20px;
-border-radius:15px;
-box-shadow:0 8px 20px rgba(0,0,0,0.15);
-}
-
-label{
-font-weight:bold;
-font-size:14px;
+border-radius:14px;
+box-shadow:0 10px 20px rgba(0,0,0,0.15);
 }
 
 input{
 width:100%;
 padding:12px;
 margin-top:5px;
-margin-bottom:10px;
-font-size:16px;
 border-radius:8px;
 border:1px solid #ccc;
+font-size:16px;
 }
 
 button{
 width:100%;
 padding:12px;
-font-size:16px;
 border:none;
 border-radius:10px;
+margin-top:12px;
+font-size:16px;
 cursor:pointer;
-margin-top:5px;
 }
 
 .calc{
@@ -67,22 +61,17 @@ background:#e2e8f0;
 }
 
 .result{
-margin-top:15px;
+margin-top:20px;
 background:#eff6ff;
 padding:15px;
 border-radius:10px;
-border:2px solid #bfdbfe;
+border:2px solid #93c5fd;
 }
 
-.status{
-font-size:18px;
+.warn{
 font-weight:bold;
 margin-top:10px;
 }
-
-.normal{color:green;}
-.low{color:red;}
-.high{color:orange;}
 
 .footer{
 text-align:center;
@@ -92,7 +81,6 @@ color:#555;
 }
 
 </style>
-
 </head>
 
 <body>
@@ -108,7 +96,7 @@ Developed by <b>Abhishek Pandey</b>
 <input id="length" type="number" placeholder="Example 750">
 
 <label>Temperature (°C)</label>
-<input id="temp" type="number" placeholder="Auto detect or enter">
+<input id="temp" type="number" placeholder="Example 35">
 
 <button class="calc" onclick="calculate()">Calculate</button>
 <button class="reset" onclick="resetApp()">Reset</button>
@@ -123,7 +111,7 @@ Developed by <b>Abhishek Pandey</b>
 <h3>Y Dimension</h3>
 <p id="yval"></p>
 
-<div id="status" class="status"></div>
+<p id="warning" class="warn"></p>
 
 </div>
 
@@ -138,8 +126,8 @@ Std X : 1300 mm<br>
 Std Y : 2300 mm<br>
 X + Y = 3600 mm<br><br>
 
-Alpha (α) : 1.7 × 10⁻⁵ /°C<br>
-Ratio : 3 : 1 Modified Pulley
+Alpha (α) : 1.7 × 10⁻⁵<br>
+Ratio : 3:1 Modified Pulley
 
 </div>
 
@@ -152,104 +140,8 @@ EASTERN RAILWAY – TRD / BASIRHAT<br>
 
 function calculate(){
 
-let L = parseFloat(document.getElementById("length").value);
-let T = parseFloat(document.getElementById("temp").value);
+let L=parseFloat(document.getElementById("length").value);
+let T=parseFloat(document.getElementById("temp").value);
 
-if(isNaN(L) || isNaN(T)){
-alert("Enter valid values");
-return;
-}
-
-let alpha = 0.000017;
-let Tref = 35;
-
-let dT = T - Tref;
-
-let expansion = alpha * L * dT;
-
-let change_mm = expansion * 1000;
-
-let X = 1300 + change_mm;
-
-let Y = 2300 - (3 * change_mm);
-
-document.getElementById("deltaT").innerHTML = dT.toFixed(2);
-
-document.getElementById("xval").innerHTML =
-X.toFixed(2) + " mm (" + (X/1000).toFixed(3) + " m)";
-
-document.getElementById("yval").innerHTML =
-Y.toFixed(2) + " mm (" + (Y/1000).toFixed(3) + " m)";
-
-checkStatus(Y);
-
-document.getElementById("result").style.display="block";
-
-}
-
-function checkStatus(Y){
-
-let status = document.getElementById("status");
-
-if(Y < 2200){
-
-status.innerHTML = "⚠ ATD POSITION LOW";
-status.className = "status low";
-
-}
-else if(Y > 2400){
-
-status.innerHTML = "⚠ ATD POSITION HIGH";
-status.className = "status high";
-
-}
-else{
-
-status.innerHTML = "✔ ATD POSITION NORMAL";
-status.className = "status normal";
-
-}
-
-}
-
-function resetApp(){
-
-document.getElementById("length").value="";
-document.getElementById("temp").value="";
-document.getElementById("result").style.display="none";
-
-}
-
-function autoTemp(){
-
-if ('AmbientTemperatureSensor' in window){
-
-try{
-
-const sensor = new AmbientTemperatureSensor();
-
-sensor.addEventListener('reading', () => {
-
-document.getElementById("temp").value = sensor.temperature.toFixed(1);
-
-});
-
-sensor.start();
-
-}catch(e){
-
-console.log("Sensor not supported");
-
-}
-
-}
-
-}
-
-autoTemp();
-
-</script>
-
-</body>
-
-</html>
+if(isNaN(L)||isNaN(T)){
+alert
