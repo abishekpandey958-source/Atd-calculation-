@@ -67,7 +67,7 @@
     <div style="border-bottom: 2px solid #2563eb; margin-bottom: 8px; padding-bottom: 4px; font-weight: 800;">REFERENCE VALUES:</div>  
     • Temp Ref: 35°C<br>  
     • Std X: 1300 mm | Std Y: 2300 mm<br>  
-    • Alpha (α): <b>1.71 × 10⁻⁵</b> (IR Standard)<br>  
+    • Alpha (α): <b>1.7 × 10⁻⁵</b> (Updated IR RDSO Std)<br>  
     • Ratio: 3:1 (Modified 3-Pulley)  
   </div>  
 </main>  <footer style="text-align: center; padding: 20px 0; color: #475569; font-size: 0.75rem;">  
@@ -82,7 +82,8 @@ function calculate() {
   const T = parseFloat(document.getElementById("temperature").value);  
   if (isNaN(L) || isNaN(T)) return;  
   
-  const alpha = 0.0000171;   
+  // Updated Alpha from 0.0000171 to 0.000017
+  const alpha = 0.000017;   
   const T_ref = 35;  
   const expansion = L * alpha * (T_ref - T) * 1000;  
     
@@ -111,5 +112,4 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => { navigator.serviceWorker.register('./service-worker.js'); });  
 }  
 </script>  </body>  
-</html>  
-
+</html>
