@@ -3,297 +3,253 @@
 <head>
 
 <meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>ATD Dimension Calculator</title>
 
-<link rel="manifest" href="manifest.json">
-
-<meta name="theme-color" content="#1e293b">
-
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
-
 <style>
 
-:root{
---railway-blue:#2563eb;
-}
-
 body{
-background:linear-gradient(180deg,#0f172a,#e5e7eb);
-font-family:sans-serif;
+font-family:Arial;
+background:#eef2f7;
 margin:0;
-min-height:100vh;
-color:#1e293b;
 }
 
-.main-card{
-background:rgba(255,255,255,0.95);
-border-radius:1.5rem;
-box-shadow:0 20px 25px rgba(0,0,0,0.2);
-margin:1rem auto;
-max-width:400px;
-padding:1.5rem;
-}
-
-.glass-input{
-background:#f1f5f9;
-border:2px solid #e2e8f0;
-border-radius:1rem;
-width:100%;
-padding:1rem;
-font-size:1.1rem;
-box-sizing:border-box;
-margin-top:0.25rem;
-}
-
-.btn-3d{
-background:linear-gradient(145deg,#2563eb,#1e40af);
+.header{
+background:#1e293b;
 color:white;
-border:none;
-border-radius:1rem;
-padding:1rem;
-font-weight:bold;
-width:100%;
-box-shadow:0 6px 0 #1e3a8a;
-cursor:pointer;
-}
-
-.btn-3d:active{
-transform:translateY(4px);
-box-shadow:0 2px 0 #1e3a8a;
-}
-
-.reset-btn{
-background:#e2e8f0;
-border:none;
-border-radius:1rem;
-padding:1rem;
-font-weight:bold;
-width:100%;
-color:#475569;
-}
-
-.result-glass{
-background:#eff6ff;
-border-radius:1rem;
-border:2px solid #bfdbfe;
-padding:1.25rem;
-margin-top:1.25rem;
-}
-
-.gauge-container{
-width:32px;
-height:140px;
-background:#cbd5e1;
-border-radius:6px;
-position:relative;
-border:2px solid #94a3b8;
-overflow:hidden;
-}
-
-.gauge-weight{
-width:100%;
-height:12px;
-background:var(--railway-blue);
-position:absolute;
-left:0;
-transition:bottom 0.6s ease;
-}
-
-.flex{display:flex;}
-.space-x-6>*+*{margin-left:1.5rem;}
-.flex-1{flex:1;}
-
-.hidden{display:none;}
-
-.info-box{
-background:#dbeafe;
-border:3px solid #2563eb;
-border-radius:1.25rem;
-padding:1.25rem;
-margin-top:1.5rem;
-color:#1e3a8a;
-font-weight:500;
-}
-
-.info-toggle{
-color:#2563eb;
-font-weight:800;
-cursor:pointer;
-text-decoration:underline;
-margin-top:15px;
-display:block;
+padding:16px;
 text-align:center;
-font-size:0.85rem;
 }
 
-.warning{
-color:#dc2626;
+.card{
+background:white;
+max-width:420px;
+margin:auto;
+margin-top:20px;
+padding:20px;
+border-radius:15px;
+box-shadow:0 8px 20px rgba(0,0,0,0.15);
+}
+
+label{
+font-weight:bold;
+font-size:14px;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-top:5px;
+margin-bottom:10px;
+font-size:16px;
+border-radius:8px;
+border:1px solid #ccc;
+}
+
+button{
+width:100%;
+padding:12px;
+font-size:16px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+margin-top:5px;
+}
+
+.calc{
+background:#2563eb;
+color:white;
+}
+
+.reset{
+background:#e2e8f0;
+}
+
+.result{
+margin-top:15px;
+background:#eff6ff;
+padding:15px;
+border-radius:10px;
+border:2px solid #bfdbfe;
+}
+
+.status{
+font-size:18px;
 font-weight:bold;
 margin-top:10px;
 }
 
-.ok{
-color:#16a34a;
-font-weight:bold;
-margin-top:10px;
+.normal{color:green;}
+.low{color:red;}
+.high{color:orange;}
+
+.footer{
+text-align:center;
+margin-top:20px;
+font-size:12px;
+color:#555;
 }
 
 </style>
+
 </head>
 
 <body>
 
-<div style="margin:1.5rem;padding:1.25rem;border-radius:1rem;background:#1e293b;text-align:center;color:white;">
-<h1 style="margin:0;font-size:1.4rem;">ATD CALCULATOR</h1>
-<p style="margin:5px 0 0;color:#94a3b8;font-size:0.8rem;">Developed by <b>Abhishek Pandey</b></p>
+<div class="header">
+<h2>ATD CALCULATOR</h2>
+Developed by <b>Abhishek Pandey</b>
 </div>
 
-<main class="main-card">
+<div class="card">
 
-<div style="background:#2563eb;color:white;border-radius:20px;padding:8px;text-align:center;font-weight:bold;margin-bottom:20px;">
-3-PULLEY MODIFIED ATD
-</div>
+<label>Half Tension Length (m)</label>
+<input id="length" type="number" placeholder="Example 750">
 
-<div style="margin-bottom:15px;">
-<label style="font-weight:bold;font-size:0.9rem;">Half Tension Length (m)</label>
-<input id="length" type="number" placeholder="eg 750" class="glass-input">
-</div>
+<label>Temperature (°C)</label>
+<input id="temp" type="number" placeholder="Auto detect or enter">
 
-<div style="margin-bottom:20px;">
-<label style="font-weight:bold;font-size:0.9rem;">Temperature (°C)</label>
-<input id="temperature" type="number" placeholder="eg 35" class="glass-input">
-</div>
+<button class="calc" onclick="calculate()">Calculate</button>
+<button class="reset" onclick="resetApp()">Reset</button>
 
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-<button onclick="calculate()" class="btn-3d">Calculate</button>
-<button onclick="resetForm()" class="reset-btn">Reset</button>
-</div>
+<div id="result" class="result" style="display:none">
 
-<div id="results" class="hidden result-glass">
+<p><b>ΔT :</b> <span id="deltaT"></span> °C</p>
 
-<div class="flex space-x-6">
+<h3>X Dimension</h3>
+<p id="xval"></p>
 
-<div style="text-align:center;">
-<div class="gauge-container">
-<div id="gaugeWeight" class="gauge-weight" style="bottom:50%;"></div>
-</div>
-<div style="font-size:10px;font-weight:bold;margin-top:5px;">Y-LEVEL</div>
-</div>
+<h3>Y Dimension</h3>
+<p id="yval"></p>
 
-<div class="flex-1">
-
-<div style="display:flex;justify-content:space-between;border-bottom:1px solid #bfdbfe;padding-bottom:5px;margin-bottom:8px;">
-<span style="font-size:0.85rem;font-weight:bold;">ΔT:</span>
-<span style="font-weight:bold;color:#1e40af;"><span id="deltaT">0</span> °C</span>
-</div>
-
-<p style="font-size:0.85rem;font-weight:800;margin:0;">X-DIMENSION</p>
-<p style="font-size:1.4rem;font-weight:900;margin:4px 0;">
-<span id="resX_mm">0</span> mm
-</p>
-
-<p style="font-size:0.85rem;font-weight:800;margin:12px 0 0;">Y-DIMENSION</p>
-<p style="font-size:1.4rem;font-weight:900;color:#1e40af;margin:4px 0;">
-<span id="resY_mm">0</span> mm
-</p>
-
-<div id="status"></div>
+<div id="status" class="status"></div>
 
 </div>
+
 </div>
-</div>
 
-<span class="info-toggle" onclick="toggleInfo()">VIEW ENGINEERING STANDARDS</span>
+<div class="card">
 
-<div id="infoBox" class="hidden info-box">
+<h3>REFERENCE VALUES (as per RDSO IR)</h3>
 
-<b>REFERENCE VALUES (As per RDSO IR)</b><br><br>
-
-Temp Ref: 35°C<br>
-Std X: 1300 mm<br>
-Std Y: 2300 mm<br>
+Temp Ref : 35°C<br>
+Std X : 1300 mm<br>
+Std Y : 2300 mm<br>
 X + Y = 3600 mm<br><br>
 
-Alpha (α): <b>1.7 × 10⁻⁵</b><br>
-Ratio: <b>3:1 Modified Pulley</b>
+Alpha (α) : 1.7 × 10⁻⁵ /°C<br>
+Ratio : 3 : 1 Modified Pulley
 
 </div>
 
-</main>
-
-<footer style="text-align:center;padding:20px;color:#475569;font-size:12px;">
-<b>EASTERN RAILWAY – TRD / BASIRHAT</b><br>
+<div class="footer">
+EASTERN RAILWAY – TRD / BASIRHAT<br>
 © 2026 Abhishek Pandey. All Rights Reserved. v2.0
-</footer>
+</div>
 
 <script>
 
-function toggleInfo(){
-document.getElementById("infoBox").classList.toggle("hidden");
-}
-
 function calculate(){
 
-const L=parseFloat(document.getElementById("length").value);
-const T=parseFloat(document.getElementById("temperature").value);
+let L = parseFloat(document.getElementById("length").value);
+let T = parseFloat(document.getElementById("temp").value);
 
-if(isNaN(L)||isNaN(T)){return;}
+if(isNaN(L) || isNaN(T)){
+alert("Enter valid values");
+return;
+}
 
-const alpha=0.000017;
-const Tref=35;
+let alpha = 0.000017;
+let Tref = 35;
 
-const deltaT=T-Tref;
+let dT = T - Tref;
 
-const expansion=L*alpha*deltaT*1000;
+let expansion = alpha * L * dT;
 
-const X=1300+expansion;
-const Y=3600-X;
+let change_mm = expansion * 1000;
 
-document.getElementById("deltaT").innerText=deltaT.toFixed(1);
-document.getElementById("resX_mm").innerText=X.toFixed(2);
-document.getElementById("resY_mm").innerText=Y.toFixed(2);
+let X = 1300 + change_mm;
 
-let pct=50+((Y-2300)/10);
+let Y = 2300 - (3 * change_mm);
 
-document.getElementById("gaugeWeight").style.bottom=Math.max(5,Math.min(95,pct))+"%";
+document.getElementById("deltaT").innerHTML = dT.toFixed(2);
 
-let status=document.getElementById("status");
+document.getElementById("xval").innerHTML =
+X.toFixed(2) + " mm (" + (X/1000).toFixed(3) + " m)";
 
-if(X<1100||X>1500){
+document.getElementById("yval").innerHTML =
+Y.toFixed(2) + " mm (" + (Y/1000).toFixed(3) + " m)";
 
-status.innerHTML="<div class='warning'>⚠ ATD Adjustment Required</div>";
+checkStatus(Y);
 
-}else{
-
-status.innerHTML="<div class='ok'>✓ ATD Position Normal</div>";
+document.getElementById("result").style.display="block";
 
 }
 
-document.getElementById("results").classList.remove("hidden");
+function checkStatus(Y){
+
+let status = document.getElementById("status");
+
+if(Y < 2200){
+
+status.innerHTML = "⚠ ATD POSITION LOW";
+status.className = "status low";
+
+}
+else if(Y > 2400){
+
+status.innerHTML = "⚠ ATD POSITION HIGH";
+status.className = "status high";
+
+}
+else{
+
+status.innerHTML = "✔ ATD POSITION NORMAL";
+status.className = "status normal";
 
 }
 
-function resetForm(){
+}
+
+function resetApp(){
 
 document.getElementById("length").value="";
-document.getElementById("temperature").value="";
-document.getElementById("results").classList.add("hidden");
-document.getElementById("infoBox").classList.add("hidden");
+document.getElementById("temp").value="";
+document.getElementById("result").style.display="none";
 
 }
 
-if('serviceWorker' in navigator){
-window.addEventListener('load',()=>{
-navigator.serviceWorker.register('./service-worker.js');
+function autoTemp(){
+
+if ('AmbientTemperatureSensor' in window){
+
+try{
+
+const sensor = new AmbientTemperatureSensor();
+
+sensor.addEventListener('reading', () => {
+
+document.getElementById("temp").value = sensor.temperature.toFixed(1);
+
 });
+
+sensor.start();
+
+}catch(e){
+
+console.log("Sensor not supported");
+
 }
+
+}
+
+}
+
+autoTemp();
 
 </script>
 
 </body>
+
 </html>
