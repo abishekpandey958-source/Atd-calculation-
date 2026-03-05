@@ -3,21 +3,24 @@
   "short_name": "ATD Calc",
   "description": "3-Pulley Modified ATD Dimension Calculator for OHE TRD",
   "start_url": "index.html",
+  "scope": ".",
   "display": "standalone",
   "background_color": "#0f172a",
   "theme_color": "#1e293b",
   "orientation": "portrait",
+  "categories": ["productivity", "utilities"],
   "icons": [
     {
-      "src": "app-icon.png",
+      "src": "https://cdn-icons-png.flaticon.com/192/1085/1085769.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "splash-icon.png",
+      "src": "https://cdn-icons-png.flaticon.com/512/1085/1085769.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "maskable"
     }
   ]
 }
