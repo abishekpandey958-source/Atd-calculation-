@@ -12,7 +12,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="ATD Calc">
     <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/1085/1085769.png">
-    
     <link rel="apple-touch-startup-image" href="https://cdn-icons-png.flaticon.com/512/1085/1085769.png">
 
     <style>
@@ -20,84 +19,40 @@
         body { 
             background: linear-gradient(180deg, #0f172a, #e5e7eb); 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-            margin: 0; 
-            min-height: 100vh; 
-            color: #1e293b; 
-            -webkit-tap-highlight-color: transparent;
+            margin: 0; min-height: 100vh; color: #1e293b; -webkit-tap-highlight-color: transparent;
         }
         .main-card { 
-            background: rgba(255, 255, 255, 0.95); 
-            backdrop-filter: blur(10px); 
-            border-radius: 1.5rem; 
-            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); 
-            margin: 1rem auto; 
-            max-width: 400px; 
-            padding: 1.5rem; 
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); 
+            border-radius: 1.5rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); 
+            margin: 1rem auto; max-width: 400px; padding: 1.5rem; 
         }
         .glass-input { 
-            background: #f1f5f9; 
-            border: 2px solid #e2e8f0; 
-            border-radius: 1rem; 
-            width: 100%; 
-            padding: 1rem; 
-            font-size: 1.125rem; 
-            box-sizing: border-box; 
-            margin-top: 0.25rem; 
-            outline: none;
-            transition: border-color 0.3s;
+            background: #f1f5f9; border: 2px solid #e2e8f0; border-radius: 1rem; 
+            width: 100%; padding: 1rem; font-size: 1.125rem; box-sizing: border-box; margin-top: 0.25rem; 
         }
-        .glass-input:focus { border-color: var(--railway-blue); }
-        
         .btn-3d { 
-            background: linear-gradient(145deg, #2563eb, #1e40af); 
-            color: white; border: none; border-radius: 1rem; 
-            padding: 1rem; font-weight: bold; width: 100%; 
+            background: linear-gradient(145deg, #2563eb, #1e40af); color: white; border: none; 
+            border-radius: 1rem; padding: 1rem; font-weight: bold; width: 100%; 
             box-shadow: 0 6px 0 #1e3a8a; cursor: pointer; 
         }
         .btn-3d:active { transform: translateY(4px); box-shadow: 0 2px 0 #1e3a8a; }
-        
-        .reset-btn { 
-            background: #e2e8f0; border: none; border-radius: 1rem; 
-            padding: 1rem; font-weight: bold; width: 100%; color: #475569; 
-        }
+        .reset-btn { background: #e2e8f0; border: none; border-radius: 1rem; padding: 1rem; font-weight: bold; width: 100%; color: #475569; }
         
         .result-glass { 
-            background: #eff6ff; border-radius: 1rem; 
-            border: 2px solid #bfdbfe; padding: 1.25rem; margin-top: 1.25rem; 
-            animation: slideUp 0.4s ease-out;
+            background: #eff6ff; border-radius: 1rem; border: 2px solid #bfdbfe; 
+            padding: 1.25rem; margin-top: 1.25rem; animation: slideUp 0.4s ease-out;
         }
-        
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .gauge-container { 
-            width: 32px; height: 140px; background: #cbd5e1; 
-            border-radius: 6px; position: relative; border: 2px solid #94a3b8; 
-            overflow: hidden; 
-        }
-        .gauge-weight { 
-            width: 100%; height: 12px; background: var(--railway-blue); 
-            position: absolute; left: 0; transition: bottom 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            border-top: 2px solid #60a5fa; 
-        }
+        .gauge-container { width: 32px; height: 140px; background: #cbd5e1; border-radius: 6px; position: relative; border: 2px solid #94a3b8; overflow: hidden; }
+        .gauge-weight { width: 100%; height: 12px; background: var(--railway-blue); position: absolute; left: 0; transition: bottom 0.6s ease; border-top: 2px solid #60a5fa; }
         
-        .flex { display: flex; } 
-        .space-x-6 > * + * { margin-left: 1.5rem; } 
-        .flex-1 { flex: 1; }
+        .flex { display: flex; } .space-x-6 > * + * { margin-left: 1.5rem; } .flex-1 { flex: 1; }
         .hidden { display: none; }
+        .unit-m { font-size: 0.9rem; color: #4f46e5; font-weight: bold; margin-left: 4px; }
         
-        .info-box { 
-            background: #dbeafe; border: 3px solid #2563eb; 
-            border-radius: 1.25rem; padding: 1.25rem; margin-top: 1.5rem; 
-            color: #1e3a8a; font-weight: 500; font-size: 0.9rem;
-        }
-        .info-toggle { 
-            color: #2563eb; font-weight: 800; cursor: pointer; 
-            text-decoration: underline; margin-top: 15px; 
-            display: block; text-align: center; font-size: 0.85rem; 
-        }
+        .info-box { background: #dbeafe; border: 3px solid #2563eb; border-radius: 1.25rem; padding: 1.25rem; margin-top: 1.5rem; color: #1e3a8a; font-weight: 500; font-size: 0.85rem;}
+        .info-toggle { color: #2563eb; font-weight: 800; cursor: pointer; text-decoration: underline; margin-top: 15px; display: block; text-align: center; font-size: 0.85rem; }
     </style>
 </head>
 <body>
@@ -136,19 +91,19 @@
                 <div style="font-size: 10px; font-weight: bold; margin-top: 5px;">WEIGHT</div>
             </div>
             <div class="flex-1">
-                <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #bfdbfe; padding-bottom: 5px; margin-bottom: 8px;">
-                    <span style="font-size: 0.85rem; font-weight: bold;">ΔT (Deviation):</span>
+                <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #bfdbfe; padding-bottom: 5px; margin-bottom: 12px;">
+                    <span style="font-size: 0.85rem; font-weight: bold;">ΔT (from 35°C):</span>
                     <span style="font-weight: bold; color: #1e40af;"><span id="deltaT">0</span> °C</span>
                 </div>
                 
-                <p style="font-size: 0.85rem; font-weight: 800; margin: 0; color: #1e293b; letter-spacing: 0.05em;">X-DIMENSION</p>
-                <p style="font-size: 1.4rem; font-weight: 900; margin: 4px 0;">
-                    <span id="resX_mm">0</span> mm
+                <p style="font-size: 0.8rem; font-weight: 800; margin: 0; color: #475569; letter-spacing: 0.05em;">X-DIMENSION</p>
+                <p style="font-size: 1.3rem; font-weight: 900; margin: 4px 0;">
+                    <span id="resX_mm">0</span> mm <span class="unit-m">(<span id="resX_m">0</span> m)</span>
                 </p>
                 
-                <p style="font-size: 0.85rem; font-weight: 800; margin: 12px 0 0; color: #1e293b; letter-spacing: 0.05em;">Y-DIMENSION</p>
-                <p style="font-size: 1.4rem; font-weight: 900; color: #1e40af; margin: 4px 0;">
-                    <span id="resY_mm">0</span> mm
+                <p style="font-size: 0.8rem; font-weight: 800; margin: 15px 0 0; color: #475569; letter-spacing: 0.05em;">Y-DIMENSION</p>
+                <p style="font-size: 1.3rem; font-weight: 900; color: #1e40af; margin: 4px 0;">
+                    <span id="resY_mm">0</span> mm <span class="unit-m">(<span id="resY_m">0</span> m)</span>
                 </p>
             </div>
         </div>
@@ -160,66 +115,71 @@
         <div style="border-bottom: 2px solid #2563eb; margin-bottom: 8px; padding-bottom: 4px; font-weight: 800;">CALCULATION BASIS:</div>
         • Standard: <b>RDSO/ETI/OHE/G/00101</b><br>
         • Alpha (α): <b>1.71 × 10⁻⁵</b> per °C<br>
-        • Base Temp: 35°C<br>
-        • Std X: 1300mm | Std Y: 2300mm
+        • Ratio: 3:1 (3-Pulley Modified)<br>
+        • Base: X=1300, Y=2300 @ 35°C
     </div>
 </main>
 
-<footer style="text-align: center; padding: 20px 0; color: #475569; font-size: 0.75rem; line-height: 1.5;">
+<footer style="text-align: center; padding: 20px 0; color: #475569; font-size: 0.75rem;">
     <b>EASTERN RAILWAY</b><br>
     TRD UNIT – BASIRHAT SECTION<br>
-    © 2026 Abhishek Pandey. v2.1
+    © 2026 Abhishek Pandey. v2.2
 </footer>
 
 <script>
-    function round(v, d) { return Math.round(v * Math.pow(10, d)) / Math.pow(10, d); }
-    function toggleInfo() { document.getElementById("infoBox").classList.toggle("hidden"); }
-
     function calculate() {
         const L = parseFloat(document.getElementById("length").value);
         const T = parseFloat(document.getElementById("temperature").value);
-        
-        if (isNaN(L) || isNaN(T)) {
-            alert("Please enter both Length and Temperature");
-            return;
-        }
+        if (isNaN(L) || isNaN(T)) return;
 
-        // RDSO Standard Alpha
         const alpha = 0.0000171;   
         const T_ref = 35;
-        
-        // expansion in mm
         const expansion = L * alpha * (T_ref - T) * 1000;
         
         const X = 1300 + expansion;
         const Y = 2300 + (3 * expansion);
 
+        // Update UI
         document.getElementById("deltaT").innerText = (T_ref - T).toFixed(1);
+        
+        // MM values (Rounded)
         document.getElementById("resX_mm").innerText = Math.round(X);
         document.getElementById("resY_mm").innerText = Math.round(Y);
         
-        // Visualize weight movement (Centered at 50% for 35 degrees)
-        let movementFactor = (expansion / 10); 
-        let pct = 50 + movementFactor;
+        // M values (3 decimal places)
+        document.getElementById("resX_m").innerText = (X/1000).toFixed(3);
+        document.getElementById("resY_m").innerText = (Y/1000).toFixed(3);
+        
+        // Visual Weight Gauge
+        let pct = 50 + (expansion / 10);
         document.getElementById("gaugeWeight").style.bottom = Math.max(5, Math.min(95, pct)) + "%";
         
         document.getElementById("results").classList.remove("hidden");
-        
-        // Smooth scroll to results
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     }
 
     function resetForm() {
         document.getElementById("length").value = "";
         document.getElementById("temperature").value = "";
         document.getElementById("results").classList.add("hidden");
-        document.getElementById("infoBox").classList.add("hidden");
     }
 
-    // Register Service Worker for Offline Mode
+    function toggleInfo() { document.getElementById("infoBox").classList.toggle("hidden"); }
+
+    // Service Worker Registration
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('./service-worker.js').catch(err => console.log('SW failed', err));
+            navigator.serviceWorker.register('./service-worker.js').then(reg => {
+                reg.addEventListener('updatefound', () => {
+                    const newWorker = reg.installing;
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.controller) {
+                            if (confirm("New Version Available! Update now?")) {
+                                window.location.reload();
+                            }
+                        }
+                    });
+                });
+            });
         });
     }
 </script>
