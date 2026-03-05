@@ -1,37 +1,33 @@
-// Incrementing to v3 to force the browser to download the new precision fix
-const cacheName = 'atd-calculator-v2.0'; 
-const assets = [
-  './',
-  './index.html',
-  './manifest.json'
+const CACHE_NAME = "trd-atd-calculator-v2.0";
+
+const urlsToCache = [
+  "./",
+  "./index.html",
+  "./manifest.json"
 ];
 
-self.addEventListener('install', (e) => {
-  e.waitUntil(
-    caches.open(cacheName).then((cache) => {
-      return cache.addAll(assets);
-    })
+self.addEventListener("install", event => {
+  self.skipWaiting();
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(urlsToCache))
   );
 });
 
-self.addEventListener('activate', (e) => {
-  e.waitUntil(
-    caches.keys().then((keys) => {
+self.addEventListener("activate", event => {
+  event.waitUntil(
+    caches.keys().then(keys => {
       return Promise.all(
-        keys.map((k) => {
-          if (k !== cacheName) {
-            return caches.delete(k);
-          }
-        })
+        keys.filter(key => key !== CACHE_NAME)
+        .map(key => caches.delete(key))
       );
     })
   );
+  return self.clients.claim();
 });
 
-self.addEventListener('fetch', (e) => {
-  e.respondWith(
-    caches.match(e.request).then((res) => {
-      return res || fetch(e.request);
-    })
+self.addEventListener("fetch", event => {
+  event.respondWith(
+    fetch(event.request).catch(() => caches.match(event.request))
   );
 });
