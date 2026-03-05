@@ -2,7 +2,7 @@
 <head>  
   <meta charset="UTF-8" />  
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />  
-  <title>ATD Dimension Calculator</title>  
+  <title>ATD Dimension Calculator (RDSO Std)</title>  
   <link rel="manifest" href="manifest.json">  
   <meta name="theme-color" content="#1e293b">    <style>  
     :root { --railway-blue: #2563eb; }  
@@ -47,7 +47,7 @@
       </div>  
       <div class="flex-1">  
         <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #bfdbfe; padding-bottom: 5px; margin-bottom: 8px;">  
-          <span style="font-size: 0.85rem; font-weight: bold;">ΔT:</span>  
+          <span style="font-size: 0.85rem; font-weight: bold;">ΔT (from 35°C):</span>  
           <span style="font-weight: bold; color: #1e40af;"><span id="deltaT">0</span> °C</span>  
         </div>  <p style="font-size: 0.85rem; font-weight: 800; margin: 0; color: #1e293b; letter-spacing: 0.05em;">X-DIMENSION</p>  
     <p style="font-size: 1.4rem; font-weight: 900; margin: 4px 0;">  
@@ -64,10 +64,10 @@
   </div>  <span class="info-toggle" onclick="toggleInfo()">VIEW ENGINEERING STANDARDS</span>
 
   <div id="infoBox" class="hidden info-box">  
-    <div style="border-bottom: 2px solid #2563eb; margin-bottom: 8px; padding-bottom: 4px; font-weight: 800;">REFERENCE VALUES:</div>  
-    • Temp Ref: 35°C<br>  
+    <div style="border-bottom: 2px solid #2563eb; margin-bottom: 8px; padding-bottom: 4px; font-weight: 800;">RDSO REFERENCE VALUES:</div>  
+    • Temp Ref ($T_{ref}$): 35°C<br>  
     • Std X: 1300 mm | Std Y: 2300 mm<br>  
-    • Alpha (α): <b>1.7 × 10⁻⁵</b> (Updated IR RDSO Std)<br>  
+    • Alpha ($\alpha$): <b>1.71 × 10⁻⁵</b><br>  
     • Ratio: 3:1 (Modified 3-Pulley)  
   </div>  
 </main>  <footer style="text-align: center; padding: 20px 0; color: #475569; font-size: 0.75rem;">  
@@ -82,20 +82,21 @@ function calculate() {
   const T = parseFloat(document.getElementById("temperature").value);  
   if (isNaN(L) || isNaN(T)) return;  
   
-  // Updated Alpha from 0.0000171 to 0.000017
-  const alpha = 0.000017;   
+  // RDSO standard alpha 1.71 x 10^-5
+  const alpha = 0.0000171;   
   const T_ref = 35;  
   const expansion = L * alpha * (T_ref - T) * 1000;  
     
   const X = 1300 + expansion;  
   const Y = 2300 + (3 * expansion);  
   
-  document.getElementById("deltaT").innerText = (T - T_ref).toFixed(1);  
+  document.getElementById("deltaT").innerText = (T_ref - T).toFixed(1);  
   document.getElementById("resX_mm").innerText = X.toFixed(2);  
   document.getElementById("resY_mm").innerText = Y.toFixed(2);  
   document.getElementById("resX_m").innerText = round(X/1000, 3);  
   document.getElementById("resY_m").innerText = round(Y/1000, 3);  
     
+  // Gauge visualization
   let pct = 50 + ((Y - 2300) / 10);  
   document.getElementById("gaugeWeight").style.bottom = Math.max(5, Math.min(95, pct)) + "%";  
   document.getElementById("results").classList.remove("hidden");  
